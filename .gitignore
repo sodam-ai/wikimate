@@ -8,6 +8,9 @@ node_modules/
 # 손 시뮬 연습장 (버려도 되는 테스트 볼트 — 배포물에 포함 금지)
 sandbox-vault/
 
+# 로컬 전용 검증 스크립트 (개인 볼트 경로 포함 — 공개 저장소에 올리지 않음)
+scripts/test-real-vault.mjs
+
 # OS / editor
 Thumbs.db
 .DS_Store
