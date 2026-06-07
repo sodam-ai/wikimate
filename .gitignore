@@ -1,0 +1,17 @@
+# dependencies
+node_modules/
+
+# secrets / local env
+.env
+.env.local
+
+# 손 시뮬 연습장 (버려도 되는 테스트 볼트 — 배포물에 포함 금지)
+sandbox-vault/
+
+# OS / editor
+Thumbs.db
+.DS_Store
+
+# logs
+*.log
+npm-debug.log*
