@@ -10,10 +10,11 @@
 4. 사람 승인 → 5. 실제 생성 → 6. 결과 보고.
 > Claude Code는 스킬 `wikimate-organize`가 자동 발동한다. Codex·Gemini는 이 규칙으로 동일하게 동작한다.
 
-## 접근 규칙 (자동 감지 — 하나만 있어도 동작)
-- **옵시디언(쓰기)**: 파일시스템 직접 쓰기가 항상 가능(앱·CLI 불필요). `notesmd-cli`/`mcp-obsidian`이 있으면 보조 활용. `.obsidian/` 수정 금지.
-- **노션(색인, Phase 1b)**: 공식 Notion MCP 또는 `ntn` CLI 중 **설치된 것**을 자동 선택. 둘 다 없으면 노션은 건너뛰고 옵시디언 노트만 생성(graceful).
-- 옵시디언 → 노션 **단방향**만.
+## 접근 규칙 (자동 감지 — 특정 도구에 한정하지 않음)
+설치된 도구를 우선순위로 자동 선택한다. 공식·커뮤니티 무엇이든 있는 것을 쓰고, 없으면 graceful 폴백.
+- **옵시디언(쓰기)**: ① 옵시디언 MCP(예: mcp-obsidian) → ② 옵시디언 CLI(예: notesmd-cli, 등록된 볼트) → ③ 파일시스템(폴백). `.obsidian/` 수정 금지.
+- **노션(색인)**: ① 공식 Notion MCP(mcp.notion.com)/notion-mcp-server → ② ntn CLI → ③ 없으면 건너뜀(옵시디언 노트만, graceful).
+- 옵시디언 → 노션 **단방향**만. 어떤 도구를 썼는지 항상 보고.
 
 ## Obsidian 규칙
 - 새 노트는 frontmatter 포함(`templates/note.md`) + 관련 개념 `[[링크]]`. 새 자료는 `00_Inbox`에서 시작, 분류 후 이동.
