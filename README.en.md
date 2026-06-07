@@ -10,7 +10,7 @@
 A secretary that turns the stuff scattered across your browser tabs, downloads folder, and AI chats into **personal knowledge notes you (and AI) can find and re-read later**.
 
 ## Current status (development stage)
-- **Phase 1a (now)**: MCP core + collect tool (`wikimate_collect`) — turns materials into Obsidian notes (.md). Includes **safety gate, dedup, and injection defense**.
+- **Phase 1a (now)**: MCP core + collect tool (`wikimate_collect`). Turns materials into Obsidian notes (.md). Includes **safety gate, dedup, and injection defense**. The server is **zero-dependency**, so it just works once installed.
 - Next: auto-classify & Notion index (1b) → auto-trigger skills (2) → marketplace release (3, after verification).
 
 ## Architecture at a glance
@@ -25,25 +25,23 @@ Safety    = analyze -> report -> human approval -> execute
 
 ## Install (Claude Code) — step by step for beginners
 
-### Option A: Locally on your PC (local test)
-1. (once) Install dependencies in this folder:
-   ```bash
-   npm install
-   ```
-2. In the Claude Code prompt:
-   ```
-   /plugin marketplace add <path to this folder>
-   /plugin install wikimate@wikimate-marketplace
-   ```
-3. **Restart** Claude Code.
-4. Verify: type `/mcp` → if you see the `wikimate` server and `wikimate_collect` tool, it works.
-
-### Option B: From GitHub (other PCs / sharing)
+### Regular users — install from GitHub (recommended)
+In the Claude Code prompt:
 ```
 /plugin marketplace add sodam-ai/wikimate
 /plugin install wikimate@wikimate-marketplace
 ```
-> Only the `marketplace add` **source** changes (local folder → `sodam-ai/wikimate`); the `install` line stays the same (the marketplace name comes from `marketplace.json`).
+→ **Restart** Claude Code → type `/mcp` → if you see `wikimate_collect`, it works.
+
+> ⚠️ **The repository must be "public" for others to install it.** It is currently private, so **public distribution comes after verification (Phase 3)**. (No separate `npm install` is needed — the server is zero-dependency.)
+
+### Developers / self-test — from a local folder
+```
+/plugin marketplace add <path to this folder>
+/plugin install wikimate@wikimate-marketplace
+```
+→ Restart → check `/mcp`.
+> The local path exists **only on your PC**, so it is not for sharing (dev/test only).
 
 ---
 
@@ -66,17 +64,18 @@ title="What is MCP?", text="...body...", vault_path="<my vault path>", dry_run=t
 
 ## For developers (local verification)
 ```bash
-npm install        # dependencies
-npm run verify     # verify collect logic (works without the SDK)
-npm start          # run the MCP server (stdio)
+npm install        # dependencies for verification only (not needed for the plugin to run)
+npm run verify     # verify collect logic
+npm start          # run the MCP server (stdio) — zero-dependency, needs only Node
 ```
+> The plugin's MCP server has **no external dependencies.** `npm install` is only needed for the `smoke-server` check (official SDK client).
 
 ## Troubleshooting
 | Symptom | Cause | Fix |
 |---|---|---|
 | Tool not shown in `/mcp` | No restart after install | Restart Claude Code |
 | "vault_path required" error | Vault path not set | Pass `vault_path` in the call or set `OBSIDIAN_VAULT_PATH` |
-| Server won't start on another PC | Dependencies not bundled | Run `npm install` there (packaging improvement planned) |
+| GitHub install fails | Repository is private | Make the repo public (after verification) or use the local method |
 
 ---
 
@@ -94,9 +93,9 @@ npm start          # run the MCP server (stdio)
 | [Notion `ntn` CLI](https://developers.notion.com/cli/get-started/overview) | Notion CLI (official) |
 
 ## Known limitations
-- Dependency bundling for GitHub installs (node_modules) → will be improved (zero-dep / bundle).
 - Notion indexing and auto-trigger skills are upcoming phases.
 - Codex adapter behavior is unverified.
+- Public distribution (many users) requires making the repo public + verification (Phase 3).
 
 ## License
 Apache-2.0 (provisional — to be finalized before public release).
